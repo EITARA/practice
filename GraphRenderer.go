@@ -90,6 +90,9 @@ func DrawingGraf() {
 
 	// Устанавливаем формат времени для оси X
 	p.X.Tick.Marker = ticks
+	p.Legend.Add("USD", usdLine)
+	p.Legend.Add("EUR", eurLine)
+	p.Legend.Add("GBP", gbpLine)
 
 	// Сохраняем график в файл
 	if err := p.Save(10*vg.Inch, 5*vg.Inch, "G:\\exchange_rates.png"); err != nil {
