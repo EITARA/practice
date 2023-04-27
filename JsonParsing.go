@@ -14,7 +14,7 @@ type CurrencyData struct {
 	TimeStamp int64              `json:"timestamp"`
 }
 
-func Parsing() CurrencyData {
+func Parsing(jsonStr string) CurrencyData {
 	file, err := os.Open("G:\\go\\dippractice\\json\\test.json")
 	if err != nil {
 		fmt.Println("Could not open file:", err)
@@ -23,11 +23,9 @@ func Parsing() CurrencyData {
 	defer file.Close()
 
 	var currencyData CurrencyData
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&currencyData)
+	err = json.Unmarshal([]byte(jsonStr), &currencyData)
 	if err != nil {
-		fmt.Println("Error decoding JSON:", err)
-		return CurrencyData{}
+		panic(err)
 	}
 
 	fmt.Println("Base currency:", currencyData.Base)
