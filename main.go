@@ -1,29 +1,38 @@
 package main
 
+import (
+	"fmt"
+	"time"
+)
+
 func main() {
 
-	// выполнение запроса к API каждые 8 часов
-	/*	interval := time.Hour * 8
+	// создадим новый ticker
+	ticker := time.NewTicker(8 * time.Hour)
+	defer ticker.Stop()
 
-		// Запуск функции, выполняющей запрос каждые 8 часов
-		ticker := time.NewTicker(interval)
-		for range ticker.C {*/
-	jsonStr := ApiConnect()
-	//}
-	println("Complete api")
-	parsingResult := Parsing(jsonStr)
-	println("Complete parse")
-	err := Connect(parsingResult)
-	if err != nil {
-		return
+	// бесконечный цикл для выполнения кода
+	for {
+		select {
+		// проверяем, что ticker двинулся
+		case <-ticker.C:
+			//код, который нужно выполнять каждые 8 часов
+			jsonStr := ApiConnect()
+			//}
+			println("Complete api")
+			parsingResult := Parsing(jsonStr)
+			println("Complete parse")
+			err := Connect(parsingResult)
+			if err != nil {
+				return
+			}
+			println("Complete conn")
+			DrawingGraf()
+			println("Complete dr")
+			UpladImg()
+			println("Complete upload")
+			fmt.Println("Приложение запущено через каждые 8 часов")
+		}
 	}
-	println("Complete conn")
-	DrawingGraf()
-	println("Complete dr")
-	UpladImg()
-	println("Complete upload")
-	// Бесконечный цикл для продолжения работы приложения
-	/*	for {
-		time.Sleep(10 * time.Second)
-	}*/
+
 }
